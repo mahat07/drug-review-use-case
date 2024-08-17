@@ -1,0 +1,585 @@
+<!-- {% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drug Information</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            height : 100%;
+            padding: 0;
+            color: #000000;
+            background: #F2F2F2;
+        }
+        header {
+            background: #986de6;
+            color: #ffffff;
+            padding: 2px 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 75px;
+        }
+
+        /* Navbar Styling */
+        .navbar {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #4f2566 !important; /* Purple background */
+            padding: 0.8rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            color: white !important;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: #ffffff !important;
+        }
+
+        .header-logo {
+            max-height: 50px;
+            width: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 20px;
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important; /* White text */
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #d6a2c4; /* Light purple on hover */
+        }
+
+        /* Active Nav Link */
+        .navbar-nav .nav-link.active {
+            color: #ffffff !important;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 5px;
+        }
+        .input-group {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .form-control {
+            width: 400px; /* Adjust width as needed */
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .btn-custom {
+            color: #ffffff;
+            background: #4f2566;
+            padding: 4px 7px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #5a3f9b; /* Darker shade for hover effect */
+        }
+        footer {
+            background-color: #4f2566;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 150px;
+            margin:0;
+            font-size: 1em;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .result-text {
+            color: rgb(0, 0, 0);
+            text-align: left;
+        }
+
+        .highlight {
+            background-color: yellow;
+            color: black;
+        }
+        .container {
+            padding: 50px;
+            max-width: 200%; /* Limit the container width */
+            height: 500%;
+            margin: auto; /* Center the container */
+            backdrop-filter: blur(10px);
+            flex: 1;
+        }
+        h1 {
+            text-align: center;
+            color: #1e5479;
+            margin: 20px 0;
+            padding: 10px;
+            background-color: white;
+            border: 2px solid #1e5479;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+        h1:hover {
+            color: #154c71;
+            transform: scale(1.05);
+        }
+        table {
+            width: 80%;
+            max-width: 1200px; 
+            border-collapse: collapse;
+            margin: auto;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        th {
+            background-color: #1e5479;
+            color: white;
+            cursor: pointer;
+        }
+        th:hover {
+            background-color: #154c71;
+        }
+        .dropdown-content {
+            display: none;
+            padding: 10px;
+            border-top: 1px solid #ddd;
+            background-color: #f9f9f9;
+            width: 100%;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .dropdown-toggle {
+            cursor: pointer;
+            color: #1e5479;
+        }
+        .dropdown-toggle:hover {
+            text-decoration: underline;
+        }
+        .review-link {
+            color: #1e5479;
+            cursor: pointer;
+        }
+        .review-link:hover {
+            text-decoration: underline;
+        }
+        .drug-info {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #e0f2f1;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .drug-info-title {
+            font-weight: bold;
+            margin-right: 5px;
+        }
+        .icon-header {
+            display: flex;
+            align-items: center;
+            margin: 20px;
+        }
+        .icon-header i {
+            margin-right: 8px;
+            color: #1e5479;
+        }
+    </style>
+</head>
+<body>
+    <h1><i class="fas fa-capsule"></i> Drug Information Table</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Drug Name</th>
+                <th>Rating</th>
+                <th>Reviews</th>
+                <th>Activity</th>
+                <th>Alcohol</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for drug in drugs %}
+            <tr>
+                <td class="dropdown-toggle" onclick="toggleDrugInfo('{{ forloop.counter0 }}-druginfo')">{{ drug.Drug }}</td>
+                <td>{{ drug.Rating }}</td>
+                <td>
+                    <span class="review-link" onclick="toggleReview('{{ forloop.counter0 }}-reviews')">{{ drug.Reviews|length }} reviews</span>
+                </td>
+                <td>
+                    {% if drug.Rating >= 6 %}
+                        <div style="background-color: green; height: 10px;"></div>
+                    {% elif drug.Rating == 5 %}
+                        <div style="background-color: orange; height: 10px;"></div>
+                    {% else %}
+                        <div style="background-color: red; height: 10px;"></div>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if drug.Alcohol|lower == 'yes' %}
+                        <i class="fas fa-check-circle" style="color:green;"></i>
+                    {% else %}
+                        <i class="fas fa-times-circle" style="color:red;"></i>
+                    {% endif %}
+                </td>
+            </tr>
+
+            <tr class="dropdown-content" id="{{ forloop.counter0 }}-druginfo">
+                <td colspan="5">
+                    <div class="drug-info">
+                        <span class="drug-info-title">Generic name:</span> {{ drug.Generic_Name }}
+                    </div>
+                    <div class="drug-info">
+                        <span class="drug-info-title">Drug class:</span> {{ drug.Drug_Class }}
+                    </div>
+                    <div class="drug-info">
+                        <span class="drug-info-title">For consumers:</span> {{ drug.Consumer_Info }}
+                    </div>
+                    <div class="drug-info">
+                        <span class="drug-info-title">Drug type:</span> {{ drug.Drug_Type }}
+                    </div>
+                </td>
+            </tr>
+
+            <tr class="dropdown-content" id="{{ forloop.counter0 }}-reviews">
+                <td colspan="5">
+                    {% for review in drug.Reviews %}
+                        <p>{{ review|linebreaksbr }}</p>
+                    {% endfor %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <script>
+        function toggleReview(id) {
+            const content = document.getElementById(id);
+            if (content.style.display === "table-row") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "table-row";
+            }
+        }
+
+        function toggleDrugInfo(id) {
+            const content = document.getElementById(id);
+            if (content.style.display === "table-row") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "table-row";
+            }
+        }
+    </script>
+</body>
+</html>
+ -->
+ <!DOCTYPE html>
+ <html lang="en">
+ <head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Drug Information</title>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <style>
+         body {
+             font-family: 'Roboto', sans-serif;
+             margin: 0;
+             height: 100%;
+             padding: 0;
+             color: #000000;
+             background: #F2F2F2;
+        }
+        
+        h1 {
+            text-align: center; /* Center text horizontally */
+            color: #1e5479;
+        }
+         
+        header {
+             background: #986de6;
+             color: #ffffff;
+             padding: 2px 0;
+             display: flex;
+             justify-content: center;
+             align-items: center;
+             height: 75px;
+         }
+ 
+         /* Navbar Styling */
+         .navbar {
+             font-family: 'Montserrat', sans-serif;
+             background-color: #4f2566 !important; /* Purple background */
+             padding: 0.8rem 1rem;
+             position: sticky;
+             top: 0;
+             z-index: 1000;
+             width: 100%;
+             color: white !important;
+         }
+ 
+         .navbar-brand {
+             display: flex;
+             align-items: center;
+             color: #ffffff !important;
+         }
+ 
+         .header-logo {
+             max-height: 50px;
+             width: auto;
+         }
+ 
+         .navbar-toggler {
+             border: none;
+         }
+ 
+         .navbar-toggler-icon {
+             background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+         }
+ 
+         .navbar-collapse {
+             justify-content: flex-end;
+         }
+ 
+         .navbar-nav .nav-item {
+             margin-left: 20px;
+             color: white !important;
+         }
+ 
+         .navbar-nav .nav-link {
+             color: #ffffff !important; /* White text */
+             font-weight: 600;
+             transition: color 0.3s;
+         }
+         .navbar-nav .nav-link:hover {
+             color: #d6a2c4; /* Light purple on hover */
+         }
+ 
+         /* Active Nav Link */
+         .navbar-nav .nav-link.active {
+             color: #ffffff !important;
+             border-bottom: 2px solid #ffffff;
+             padding-bottom: 5px;
+         }
+ 
+         /* Table Styling */
+         table {
+             width: 80%;
+             max-width: 1200px;
+             border-collapse: collapse;
+             margin: 20px auto;
+             background-color: #ffffff;
+             border-radius: 8px;
+             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+         }
+         th, td {
+             padding: 12px;
+             text-align: left;
+             border-bottom: 1px solid #ddd;
+         }
+         th {
+             background-color: #4f2566; /* Purple background */
+             color: white;
+             cursor: pointer;
+         }
+         th:hover {
+             background-color: #5a3f9b; /* Darker purple on hover */
+         }
+         .dropdown-content {
+             display: none;
+             padding: 10px;
+             border-top: 1px solid #ddd;
+             background-color: #f9f9f9;
+             width: 100%;
+             box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+         }
+         .dropdown-toggle {
+             cursor: pointer;
+             color: #4f2566; /* Purple text */
+         }
+         .dropdown-toggle:hover {
+             text-decoration: underline;
+         }
+         .review-link {
+             color: #4f2566; /* Purple text */
+             cursor: pointer;
+         }
+         .review-link:hover {
+             text-decoration: underline;
+         }
+         .drug-info {
+             margin: 10px 0;
+             padding: 10px;
+             background-color: #e0f2f1; /* Light teal background */
+             border-radius: 5px;
+             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+         }
+         .drug-info-title {
+             font-weight: bold;
+             margin-right: 5px;
+         }
+         .icon-header {
+             display: flex;
+             align-items: center;
+             margin: 20px;
+         }
+         .icon-header i {
+             margin-right: 8px;
+             color: #4f2566; /* Purple icon */
+         }
+         .container {
+            padding: 30px;
+            max-width: 1000px;
+            margin: 50px auto;
+            background: #ffffff;
+            box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .container:hover {
+            transform: translateY(-5px);
+        }
+        .result-text h1,
+        .result-text h2 {
+            color: #4f2566;
+        }
+
+        .result-text ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .result-text li {
+            background-color: #f1f9ff;
+            border-left: 5px solid #4f2566;
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .result-text li:hover {
+            background-color: #745c81;
+        }
+     </style>
+ </head>
+ <body>
+    <div class="container">
+     <h1><i class="fas fa-capsule"></i> Drug Information Table</h1>
+     <table>
+         <thead>
+             <tr>
+                 <th>Drug Name</th>
+                 <th>Rating</th>
+                 <th>Reviews</th>
+                 <th>Activity</th>
+                 <th>Alcohol</th>
+             </tr>
+         </thead>
+         <tbody>
+             {% for drug in drugs %}
+             <tr>
+                 <td class="dropdown-toggle" onclick="toggleDrugInfo('{{ forloop.counter0 }}-druginfo')">{{ drug.Drug }}</td>
+                 <td>{{ drug.Rating }}</td>
+                 <td>
+                     <span class="review-link" onclick="toggleReview('{{ forloop.counter0 }}-reviews')">{{ drug.Reviews|length }} reviews</span>
+                 </td>
+                 <td>
+                     {% if drug.Rating >= 6 %}
+                         <div style="background-color: green; height: 10px;"></div>
+                     {% elif drug.Rating == 5 %}
+                         <div style="background-color: orange; height: 10px;"></div>
+                     {% else %}
+                         <div style="background-color: red; height: 10px;"></div>
+                     {% endif %}
+                 </td>
+                 <td>
+                     {% if drug.Alcohol|lower == 'yes' %}
+                         <i class="fas fa-check-circle" style="color:green;"></i>
+                     {% else %}
+                         <i class="fas fa-times-circle" style="color:red;"></i>
+                     {% endif %}
+                 </td>
+             </tr>
+ 
+             <tr class="dropdown-content" id="{{ forloop.counter0 }}-druginfo">
+                 <td colspan="5">
+                     <div class="drug-info">
+                         <span class="drug-info-title">Generic name:</span> {{ drug.Generic_Name }}
+                     </div>
+                     <div class="drug-info">
+                         <span class="drug-info-title">Drug class:</span> {{ drug.Drug_Class }}
+                     </div>
+                     <div class="drug-info">
+                         <span class="drug-info-title">For consumers:</span> {{ drug.Consumer_Info }}
+                     </div>
+                     <div class="drug-info">
+                         <span class="drug-info-title">Drug type:</span> {{ drug.Drug_Type }}
+                     </div>
+                 </td>
+             </tr>
+ 
+             <tr class="dropdown-content" id="{{ forloop.counter0 }}-reviews">
+                 <td colspan="5">
+                     {% for review in drug.Reviews %}
+                         <p>{{ review|linebreaksbr }}</p>
+                     {% endfor %}
+                 </td>
+             </tr>
+             {% endfor %}
+         </tbody>
+     </table>
+     </div>
+     <script>
+         function toggleReview(id) {
+             const content = document.getElementById(id);
+             if (content.style.display === "table-row") {
+                 content.style.display = "none";
+             } else {
+                 content.style.display = "table-row";
+             }
+         }
+ 
+         function toggleDrugInfo(id) {
+             const content = document.getElementById(id);
+             if (content.style.display === "table-row") {
+                 content.style.display = "none";
+             } else {
+                 content.style.display = "table-row";
+             }
+         }
+     </script>
+ </body>
+ </html>
+ 

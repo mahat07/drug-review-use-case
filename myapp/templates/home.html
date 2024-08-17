@@ -1,0 +1,934 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Drug Review Analysis</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap">
+    <link rel="stylesheet" href="https://your-web-font-provider.com/path-to-strain-font.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            background: #F2F2F2;
+        }
+        /* Navbar Styling */
+        .navbar {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #4f2566 !important; /* Purple background */
+            padding: 0.8rem 1rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            color: #4f2566 !important;
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            color: #4f2566 !important;
+        }
+
+        .header-logo {
+            max-height: 50px;
+            width: auto;
+        }
+
+        .navbar-toggler {
+            border: none;
+        }
+
+        .navbar-toggler-icon {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3E%3Cpath stroke='rgba%28255, 255, 255, 0.5%29' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+        }
+
+        .navbar-collapse {
+            justify-content: flex-end;
+        }
+
+        .navbar-nav .nav-item {
+            margin-left: 20px;
+            color: white !important;
+        }
+
+        .navbar-nav .nav-link {
+            color: #ffffff !important; /* White text */
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .navbar-nav .nav-link:hover {
+            color: #d6a2c4; /* Light purple on hover */
+        }
+
+        /* Active Nav Link */
+        .navbar-nav .nav-link.active {
+            color: #ffffff !important;
+            border-bottom: 2px solid #ffffff;
+            padding-bottom: 5px;
+        }
+        .showcase {
+            min-height: 500px;
+            text-align: center;
+            color: #000000;
+            padding: 10px 10px;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        .showcase h1 {
+            padding: 2px;
+            color: black !important;
+        }
+        .showcase p {
+            font-size: 1.5em;
+            margin: 20px auto; /* Center the paragraph and adjust top/bottom margins */
+            background-color: rgba(79, 37, 102, 0.5);
+            padding: 15px;
+            border-radius: 10px;
+            animation: slideIn 1s ease-out 0.5s;
+            width: 70%; /* Reduce the width of the paragraph */
+            max-width: 800px; /* Set a maximum width for larger screens */
+        }
+        .btn-custom {
+            color: #ffffff;
+            background: #4f2566;
+            padding: 4px 7px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 1.2em;
+            transition: background 0.3s, transform 0.3s;
+        }
+        .btn-custom:hover {
+            background-color: #5a3f9b; /* Darker shade for hover effect */
+        }
+        footer {
+            background-color: #4f2566;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 1em;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .result-text {
+            color: white;
+            text-align: left;
+        }
+        #map-section {
+            padding: 20px 0;
+            text-align: center;
+        }
+        #map-section h2{
+            color:#000000;
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color:#4f2566 !important; /* Dark violet */
+            font-weight: bold; /* Bold text */
+            position: relative;
+            display: inline-block;
+            animation: text-pop 1s ease-in-out; /* Text pop effect */
+        }
+        #map {
+            height: 450px;
+        }
+        .input-group {
+            width: 60%;
+            margin: 0 auto;
+        }
+
+        .form-control {
+            width: 100%;
+            height: auto;
+        }
+        .button-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Increase the gap between buttons */
+            margin-top: 20px;
+        }
+
+        .btn-custom {
+            padding: 15px 30px;  /* Increase padding for larger buttons */
+            font-size: 18px;     /* Increase font size */
+            border-radius: 5px;  /* Adjust border radius for a more defined look */
+            background-color: #4f2566; /* Example background color */
+            color: white;        /* Text color */
+            text-align: center;  /* Center text */
+            border: none;        /* Remove default border */
+            cursor: pointer;     /* Change cursor to pointer on hover */
+            transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth hover and click transitions */
+        }
+
+        .btn-custom:hover {
+            background-color: #712f94; /* Darker shade on hover */
+        }
+
+        .btn-custom:active {
+            transform: scale(0.98); /* Slightly shrink on click for feedback */
+        }
+
+        #typewriter {
+            /* font-family: 'Roboto', sans-serif; */
+            font-size: 3em;
+            color: #000000;
+            border-right: 2px solid #333;
+            white-space: nowrap;
+            overflow: hidden;
+            display: inline-block;
+            animation: typing 4s steps(50, end) infinite, blink 0.75s step-end infinite;
+            font-family: 'Akaya Telivigala', sans-serif;
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+        @keyframes blink {
+            from, to { border-color: transparent; }
+            50% { border-color: #333; }
+        }
+        #features {
+            padding: 50px 0;
+        }
+        /* General Card Styles */
+        .section-title {
+            font-size: 1.8rem;
+            margin-bottom: 20px;
+            text-align: center;
+            color: #4f2566;
+        }
+
+        .features-container {
+            max-width: 10000px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .feature-card {
+            margin-bottom: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-title {
+            font-size: 1rem;
+            margin-bottom: 10px;
+            text-align: center;
+            color: #4f2566;
+        }
+
+        .smaller-text {
+            font-size: 0.7rem; /* Adjusted size */
+            color: #4f2566;
+            text-align: center;
+        }
+        header {
+            background-size: cover;
+            background-position: center;
+            color: #000; /* Black text color */
+            height: 90vh; /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            margin-bottom: 5px; /* Space between header and main content */
+            position: relative; /* To ensure the animation effect works */
+            animation: changeBackground 15s infinite; /* Background image animation */
+        }
+        header h1 {
+            margin: 0;
+            font-size: 4em; /* Larger font size for emphasis */
+            font-weight: bold;
+            overflow: hidden; /* Ensures the text is animated properly */
+            white-space: nowrap; /* Prevents line breaks */
+            position: relative;
+            display: inline-block;
+            animation: typing 4s steps(40, end), blink-caret 0.75s step-end infinite, color-change 6s linear infinite, zoom-in-out 8s ease-in-out infinite; /* Multiple animations */
+            color: #000; /* Black text color */
+        }
+
+        @keyframes changeBackground {
+            0% {
+                background-image: url('https://source.unsplash.com/random/1920x800/?nature'); /* Random nature image */
+            }
+            33% {
+                background-image: url('https://source.unsplash.com/random/1920x800/?technology'); /* Random technology image */
+            }
+            66% {
+                background-image: url('https://source.unsplash.com/random/1920x800/?architecture'); /* Random architecture image */
+            }
+            100% {
+                background-image: url('https://source.unsplash.com/random/1920x800/?nature'); /* Loop back to first image */
+            }
+        }
+
+        @keyframes typing {
+            from { width: 0; }
+            to { width: 100%; }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent; }
+            50% { border-color: rgba(0, 0, 0, 0.75); }
+        }
+
+        @keyframes color-change {
+            0% { color: #000; }
+            25% { color: #ab47bc; } /* Medium purple */
+            50% { color: #6a1b9a; } /* Dark purple */
+            75% { color: #ab47bc; } /* Medium purple */
+            100% { color: #4f2566; }
+        }
+
+        @keyframes zoom-in-out {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); } /* Zoom in effect */
+        }
+
+        header p {
+            font-size: 1.5em;
+            margin: 20px 0 0;
+            color: #000; /* Black text color */
+            font-weight: bold; /* Bold text */
+            animation: fadeIn 3s ease-out; /* Fade-in effect */
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .intro-section {
+            background: #4f2566; /* Dark purple background */
+            color: #fff; /* White text color */
+            padding: 90px 60px;
+            text-align: center;
+            border-bottom: 4px solid #ab47bc; /* Accent border */
+            position: relative;
+            overflow: hidden; /* To handle overflow of animated elements */
+            display: flex; /* Use flexbox for layout */
+            align-items: center; /* Center items vertically */
+            justify-content: space-between; /* Space between image and text */
+        }
+
+        .intro-section img {
+            width: 50%; /* Adjust size as needed */
+            height: auto;
+            margin-right: 20px; /* Space between image and text */
+        }
+
+        .intro-section .intro-text {
+            width: 50%; /* Take up the remaining space */
+            text-align: left; /* Align text to the left */
+        }
+
+        .intro-section h2 {
+            font-size: 3em;
+            margin: 0;
+            font-weight: bold;
+            animation: slideInFromLeft 1.5s ease-out;
+            color: #e1bee7; /* Light purple text */
+        }
+
+        .intro-section p {
+            font-size: 1.5em;
+            margin-top: 20px;
+            animation: fadeIn 2s ease-out;
+        }
+        .section {
+            padding: 60px 20px; 
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            text-align: center; 
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+            color:#4f2566 !important;
+            font-weight: bold; 
+            position: relative;
+            display: inline-block;
+            animation: text-pop 1s ease-in-out; 
+        }
+
+        .section-title h1{
+            color: #4f2566 !important;
+        }
+        @keyframes text-pop {
+            0% { transform: scale(1); opacity: 0.7; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Flexbox layout for containers */
+        .containers-row {
+            display: flex;
+            justify-content: center;
+            gap: 20px; /* Space between containers */
+            margin: 40px 0;
+        }
+
+        .containers {
+            background-color: #4f2566; /* Dark purple background */
+            border-radius: 10px;
+            padding: 20x;
+            color: #fff;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 275px; /* Reduced width */
+            height: 320px; /* Increased height */
+            transition: transform 0.3s;
+        }
+
+        .containers:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        .containers img {
+            max-width: 150px; /* Resize logo */
+            margin-top: 20px;
+        }
+
+        .containers h3 {
+            font-size: 1.5em;
+            margin-top: 0; /* Remove top margin to reduce space from logo */
+            margin-bottom: 10px; /* Space between heading and paragraph */
+
+        }
+
+        .containers p {
+            font-size: 1em;
+            margin-top: 0;
+        }
+        .containers hr {
+            width: 100%; /* Adjust width of the line */
+            border: 1px solid #ffffff; /* Set line color to a medium purple */
+            margin: 10px 0; /* Adjust spacing around the line */
+        }
+
+        /* Chat Container */
+        #chat-container {
+            position: fixed;
+            bottom: 120px; /* Position above the chat button */
+            right: 20px;
+            width: 300px;
+            height: 400px;
+            background-color: #ffffff;
+            border-radius: 10px; /* Rounded corners */
+            display: none;
+            flex-direction: column;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            transform: translateY(100%);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        #chat-header {
+            background-color: #4f2566;
+            color: #ffffff;
+            padding: 10px;
+            text-align: center;
+            font-weight: bold;
+            cursor: pointer;
+            border-top-left-radius: 20px; /* Rounded top corners */
+            border-top-right-radius: 20px; /* Rounded top corners */
+        }
+
+        #chat-body {
+            padding: 10px;
+            overflow-y: auto;
+            flex: 1;
+            background-color: #f4f4f9;
+        }
+
+        #chat-input-container {
+            display: flex;
+            border-top: 1px solid #ddd;
+        }
+
+        #chat-input {
+            flex: 1;
+            padding: 10px;
+            border: none;
+            border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+            outline: none;
+            font-size: 16px;
+        }
+
+        #send-button {
+            background-color: #4f2566;
+            color: #ffffff;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            border-radius: 0 0 10px 10px; /* Rounded bottom corners */
+            font-size: 16px;
+            height: 100%;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 10px;
+            border-radius: 15px; /* Rounded corners for messages */
+            max-width: 100%;
+            position: relative;
+            word-wrap: break-word;
+            display: inline-block;
+        }
+
+        .user-message {
+            background-color: #d1c4e9;
+            align-self: flex-end;
+        }
+
+        .bot-message {
+            background-color: #e8eaf6;
+            align-self: flex-start;
+        }
+
+        .message::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 0;
+        }
+
+        .user-message::after {
+            border-width: 10px;
+            border-style: solid;
+            border-color: #d1c4e9 transparent transparent transparent;
+            bottom: 0;
+            right: -10px;
+        }
+
+        .bot-message::after {
+            border-width: 10px;
+            border-style: solid;
+            border-color: #e8eaf6 transparent transparent transparent;
+            bottom: 0;
+            left: -10px;
+        }
+
+        /* Chat Toggle Button */
+        #chat-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4f2566;
+            color: #ffffff;
+            border: none;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            text-align: center;
+            line-height: 60px;
+            cursor: pointer;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+            z-index: 1001;
+        }
+
+        #chat-toggle:hover {
+            background-color: #3b1a4e;
+        }
+
+        #chat-container.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        #chat-container.hide {
+            opacity: 0;
+            transform: translateY(100%);
+        }
+
+        /* Links and Buttons in Chat */
+        .option-box {
+            background-color: #d1c4e9;
+            border-radius: 10px;
+            padding: 5px 10px; /* Reduce padding */
+            margin: 3px 0; /* Reduce margin */
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            font-size: 14px; /* Reduce font size */
+            width: auto; /* Adjust width as needed */
+            text-align: center; /* Center-align the text */
+        }
+
+        .option-box:hover {
+            background-color: #c3a6e4;
+        }
+
+        .response-paragraph {
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body data-spy="scroll" data-target="#navbar" data-offset="50">
+    <nav id="navbar" class="navbar navbar-expand-lg navbar-light bg-light" style="border-bottom: 3px solid #ab47bc;">
+        <a class="navbar-brand" href="#">
+            <img src="{% static 'images/logobig.png' %}" alt="Drugpedia Logo" class="header-logo">
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'home' %}"><i class="fa fa-home" aria-hidden="true"></i>  Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#map-section"><i class="fa fa-map" aria-hidden="true"></i>  View Map</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="https://public.tableau.com/views/CHTDashbord/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link"><i class="fa fa-line-chart" aria-hidden="true"></i>  View Analytics</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'profile' %}"><i class="fa fa-user-circle" aria-hidden="true"></i>  Profile</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <header>
+        <h1>Every review is a voice;<br> We amplify it with Insights..!</h1>
+        <p><i class="fa-solid fa-capsules"></i>Turning data into decisions—empowering Healthcare through AI</p>
+    </header>
+
+
+    <div id="chat-toggle" onclick="toggleChat()">💬</div>
+
+    <div id="chat-container">
+        <div id="chat-header" onclick="toggleChat()">Drugpedia Chatbot</div>
+        <div id="chat-body"></div>
+        <div id="chat-input-container">
+            <input type="text" id="chat-input" placeholder="Type your message..." onkeydown="if (event.key === 'Enter') sendMessage()">
+            <button id="send-button" onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <div class="intro-section">
+        <img src= "{% static 'images/introsec.png' %}" alt="Logo">
+        <h2>About Us</h2><br>
+        <p>We are revolutionizing healthcare by harnessing the power of AI and machine learning to unlock the hidden potential within drug reviews. Our platform goes beyond the data, delivering deep insights that empower patients and healthcare professionals to make life-changing decisions.</p>
+    </div>
+    <div class="showcase">
+        <div class="container">
+            <div class="button-container">
+                <a href="{% url 'feedback_form' %}" class="btn btn-custom">Give Feedback</a>
+                <a href="{% url 'recent_reviews' %}" class="btn btn-custom">Recent Reviews</a>
+            </div>
+            <br>
+            <form class="mb-3" action="{% url 'download_report' %}" method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" name="drug_name" placeholder="Enter drug name for report">
+                    <div class="input-group-append">
+                        <button type="submit" class="btn btn-custom">Generate Report</button>
+                    </div>
+                </div>
+            </form>
+            <div class="collapse result-text" id="reportResult">
+                <!-- Report generation result will be displayed here -->
+            </div>
+    </div>
+    <br>
+
+    <section>
+    <div class="section" id="section1">
+        <h2 class="section-title">Our Services</h2>
+        <div class="containers-row">
+            <div class="containers">
+                <a href="{% url 'predict_condition' %}" style="color: white; text-decoration: none;">
+                <img src="{% static 'images/predict.png' %}" alt="Logo">
+                <hr> <!-- Line added below the logo -->
+                <h3><strong>Possible Diagnosis</strong></h3>
+                </a>
+                Uncover the underlying condition<br>from any review
+            </div>
+            <div class="containers">
+                <a href="{% url 'predict_rating' %}" style="color: white; text-decoration: none;">
+                <img src="{% static 'images/rating.png' %}" alt="Logo">
+                <hr> <!-- Line added below the logo -->
+                <h3><strong>Expected Satisfaction</strong></h3>
+                </a>
+                Estimate the rating based on<br>patient experiences.
+            </div>
+            <div class="containers">
+                <a href="{% url 'predict_sentiment' %}" style="color: white; text-decoration: none;">
+                <img src="{% static 'images/sentiment_analysis.png' %}" alt="Logo">
+                <hr> <!-- Line added below the logo -->
+                <h3><strong>Uncover Sentiment</strong></h3>
+                </a>
+                Delve into sentiments to<br>understandpatient feedback.
+            </div>
+        </div>
+        
+        <div class="containers-row">
+            <div class="containers" >
+                <a href="{% url 'explore_drug' %}" style="color: white; text-decoration: none;">
+                <img src="{% static 'images/drug.png' %}" alt="Logo">
+                <hr> <!-- Line added below the logo -->
+                <h3><strong>Unveil Drug Profiles</strong></h3>
+                </a>
+                Discover conditions associated<br>with any Drug.
+            </div>
+            <div class="containers">
+                <a href="{% url 'explore_condition' %}" style="color: white; text-decoration: none;">
+                <img src="{% static 'images/condition.png' %}" alt="Logo">
+                <hr> <!-- Line added below the logo -->
+                <h3><strong>Conditions Hub</strong></h3>
+                </a>
+                Discover drugs linked to<br>specific medical conditions.
+            </div>
+        </div>
+    </div>
+    </section>
+    <section id="map-section">
+        <div class="container">
+            <h2>Drug Spread Map</h2>
+            <div id="map"></div>
+        </div>
+    </section>
+    <footer>
+        &copy; 2024 Your Company. All rights reserved.
+    </footer>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-heat/dist/leaflet-heat.js"></script>
+    <script>
+        function showResult(event, resultId) {
+            event.preventDefault();
+            const formData = $(event.target).serialize();
+            $.ajax({
+                url: $(event.target).attr('action'),
+                method: 'GET',
+                data: formData,
+                success: function(response) {
+                    console.log("AJAX Success Response:", response);  // Debugging line
+                    $('#' + resultId).html(response).collapse('show');
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX Error:', status, error);  // Debugging line
+                    $('#' + resultId).html('An error occurred. Please try again.').collapse('show');
+                }
+            });
+        }
+        var map = L.map('map').setView([11.6854, 76.1310], 7);
+    
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+    
+        var tooltipContent = `
+            <strong>Wayanadu, Landslide ALert.!, Click to know more</strong><br>
+            Acetaminophen (Paracetamol) - Jun-Jul<br>
+            Cephalexin - May-July`
+        ;
+
+        var marker = L.marker([10.8505, 76.2711]).addTo(map)
+            .bindPopup('<a href="{% url "forecast_form" %}">Click here to know more</a>')
+            .bindTooltip(tooltipContent, {permanent: false, direction: 'top'})
+            .on('click', function () {
+
+                var forecastFormUrl = "{% url 'forecast_form' %}";
+                window.location.href = forecastFormUrl;
+            });
+
+        var upTooltipContent = `
+            <strong>Earthquake Alert..!, Click to know more</strong><br>
+            Cetirizine - Jun-Jul<br>
+            Salbutamol Inhalers - Jun-Jul`
+        ;
+        
+
+        var upMarker = L.marker([26.8467, 80.9462]).addTo(map)
+            .bindPopup('<a href="{% url "forecast1_form" %}">Click here to know more</a>')
+            .bindTooltip(upTooltipContent, {permanent: false, direction: 'top'})
+            .on('click', function () {
+                var forecastFormUrl = "{% url 'forecast1_form' %}";
+                window.location.href = forecastFormUrl;
+            });
+        
+        // Adding colored markers for specific locations in Tripura
+        var markers = [
+            { coords: [23.8315, 91.2868], fillColor: 'red', name: 'Agartala' }, // Agartala
+            { coords: [23.9015, 91.9985], fillColor: 'orange', name: 'Dhalai' }, // Dhalai
+            { coords: [23.4033, 91.6810], fillColor: 'green', name: 'Gomati' }, // Gomati
+            { coords: [24.1042, 91.5821], fillColor: 'green', name: 'Khowai' }, // Khowai
+            { coords: [24.0667, 91.5670], fillColor: 'red', name: 'North Tripura' }, // North Tripura
+            { coords: [23.7480, 91.3809], fillColor: 'green', name: 'Sepahijala' }, // Sepahijala
+            { coords: [24.3186, 92.1597], fillColor: 'orange', name: 'Unakoti' } // Unakoti
+        ];
+
+        markers.forEach(function(marker) {
+            // Create a filled marker
+            L.circleMarker(marker.coords, {
+                color: marker.fillColor,
+                fillColor: marker.fillColor, // Fill the marker with the color
+                fillOpacity: 1,
+                radius: 8,
+                weight: 2
+            }).addTo(map)
+            .bindTooltip(`<strong>${marker.name}</strong>`)
+            .on('click', function() {
+                alert(marker.name);  // Display the name of the place on click
+            });
+        });
+
+        // Add a single dotted circle encompassing all the markers
+        L.circle([23.8315, 91.2868], {  // Center the circle roughly around Agartala (adjust as needed)
+            color: 'blue',  // Changed color of the dotted circle for better contrast
+            radius: 90000,   // Adjust the radius to cover all points
+            dashArray: '10, 10',  // Creates the dotted effect
+            weight: 2,
+            fillOpacity: 0  // Make the circle transparent
+        }).addTo(map)
+        .on('click', function() {
+            window.location.href = '/hiv/';  // Redirect to hiv.html on circle click
+        });
+
+
+        function toggleChat() {
+            const chatContainer = document.getElementById('chat-container');
+            if (chatContainer.style.display === 'none' || chatContainer.style.display === '') {
+                chatContainer.style.display = 'flex';
+                chatContainer.classList.remove('hide');
+                chatContainer.classList.add('show');
+
+                // Greet the user when the chat is opened
+                const chatBody = document.getElementById('chat-body');
+                chatBody.innerHTML += `<div class="message bot-message">Hello! Welcome to Drugpedia. How can I assist you today?</div>`;
+                chatBody.scrollTop = chatBody.scrollHeight;
+            } else {
+                chatContainer.classList.remove('show');
+                chatContainer.classList.add('hide');
+                setTimeout(() => chatContainer.style.display = 'none', 300);
+            }
+        }
+
+        function sendMessage() {
+            const input = document.getElementById('chat-input');
+            const chatBody = document.getElementById('chat-body');
+            const userMessage = input.value.trim();
+
+            if (userMessage) {
+                chatBody.innerHTML += `<div class="message user-message">${userMessage}</div>`;
+                input.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+                const botResponse = getResponse(userMessage);
+                setTimeout(() => {
+                    chatBody.innerHTML += `<div class="message bot-message">${botResponse}</div>`;
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                }, 500);
+            }
+        }
+
+        function getResponse(userInput) {
+            userInput = userInput.toLowerCase();
+
+            if (userInput === "1") {
+                return "Predict the condition based on user inputs. <a href='/predict_condition'>Click here</a> to start.";
+            }
+
+            if (userInput === "2") {
+                return "Predict the rating a user might give based on inputs. <a href='/predict_rating'>Click here</a> to start.";
+            }
+
+            if (userInput === "3") {
+                return "Analyze user reviews for sentiment and insights. <a href='/predict_sentiment'>Click here</a> to start.";
+            }
+
+            if (userInput === "4") {
+                return "Explore detailed drug information by name or category. <a href='/explore_drug'>Click here</a> to start.";
+            }
+
+            if (userInput === "5") {
+                return "Find drugs based on conditions they treat. <a href='/explore_condition'>Click here</a> to start.";
+            }
+
+            if (userInput === "6") {
+                return "See the geographic distribution and forecast of drug usage. <a href='#map-section'>Click here</a> to start.";
+            }
+
+            if (userInput === "7") {
+                return "Access detailed analytics on drug usage and reviews. <a href='https://public.tableau.com/views/CHTDashbord/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link'>Click here</a> to start.";
+            }
+
+            if (userInput === "8") {
+                return "Provide your feedback on drugs. <a href='/feedback'>Click here</a> to start.";
+            }
+
+            if (userInput === "9") {
+                return "View the latest user reviews. <a href='recent_reviews'>Click here</a> to start.";
+            }
+
+            if (userInput.includes("hello") || userInput.includes("hi")) {
+                return "Hi there! How can I help you today?";
+            }
+
+            if (userInput.includes("what is drugpedia")) {
+                return "Drugpedia provides detailed information on various drugs, including their efficacy, safety, and user reviews.";
+            }
+
+            if (userInput.includes("features") || userInput.includes("what can i do")) {
+                return (
+                    "Here are the features you can explore:" +
+                    "<div class='option-box'> <a href='/predict_condition' style='color: white;'>1.Predict Condition</div>" +
+                    "<div class='option-box'> <a href='/predict_rating' style='color: white;'>2.Predict Rating</div>" +
+                    "<div class='option-box'> <a href='/predict_sentiment' style='color: white;'>3.Analyse Review</div>" +
+                    "<div class='option-box'> <a href='/explore_drug' style='color: white;'>4.Explore Drug</div>" +
+                    "<div class='option-box'> <a href='/explore_condition' style='color: white;'>5.Explore Condition</div>" +
+                    "<div class='option-box'> <a href='#map-section' style='color: white;'>6.Forecast Map</div>" +
+                    "<div class='option-box'> <a href='https://public.tableau.com/views/CHTDashbord/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link' style='color: white;'>7.Analytics</div>" +
+                    "<div class='option-box'> <a href='feedback_form' style='color: white;'>8.Feedback Form</div>" +
+                    "<div class='option-box'> <a href='recent_reviews' style='color: white;'>9.Recent Reviews</div>"
+                );
+            }
+
+            if (userInput.includes("thank you")) {
+                return "You're welcome! If you have any more questions, feel free to ask. Have a great day!";
+            }
+
+
+            return "Sorry, I didn't understand that. Can you please specify one of the available features or type 'features' to see what I can do?";
+        }
+
+
+    </script>
+</body>
+</html>

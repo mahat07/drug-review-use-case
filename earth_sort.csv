@@ -1,0 +1,75 @@
+Drug,Drug_type,Condition,Date,Price,Location,Sales,Stock_Availability,Sentiment,Review
+Cetirizine,Anti-allergics and Antihistamines,Allergy,15-03-2024,52,Dehradun,380,High,Effective,Cetirizine is very effective in treating allergy symptoms. The relief is almost immediate and long-lasting.
+Povidone-iodine,Antiseptics,Wound Care,25-02-2024,21,Guwahati,230,Medium,Neutral,Povidone-iodine is a standard antiseptic. It does its job but is not particularly noteworthy.
+Loperamide,Gastrointestinal Medications,Diarrhea,20-04-2023,22,Srinagar,200,High,Not-Effective,Loperamide did not work as well as expected. The symptoms persisted for longer than anticipated.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,20-01-2024,55,Rishikesh,175,Medium,Effective,Salbutamol Inhalers provide quick relief for asthma attacks. They are essential for managing respiratory issues.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,15-01-2024,58,Darjeeling,370,High,Not-Effective,Cetirizine worked initially but didn't provide long-term relief. Side effects were noticeable.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,07-10-2023,61,Guwahati,220,High,Neutral,Paracetamol is okay for occasional pain relief. It doesn't always last long enough for more severe pains.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,03-03-2024,62,Srinagar,185,Medium,Not-Effective,Salbutamol Inhalers were less effective during a recent asthma attack. I had to use them more frequently.
+Amoxicillin,Antibiotics,Infection,02-10-2024,63,Jammu,280,High,Effective,Amoxicillin was effective in treating my infection. It was easy to use and had minimal side effects.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,20-02-2024,67,Gangtok,270,High,Not-Effective,Paracetamol sometimes doesn't alleviate my headaches as well as I hoped. I need stronger medication.
+Loperamide,Gastrointestinal Medications,Diarrhea,25-03-2024,68,Darjeeling,250,Medium,Effective,Loperamide was effective for my stomach issues. It worked as expected and provided quick relief.
+Povidone-iodine,Antiseptics,Wound Care,30-01-2024,39,Shimla,210,High,Neutral,Povidone-iodine is a basic antiseptic. It does the job but isn't particularly exceptional.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,15-02-2024,24,Leh,180,Medium,Effective,Salbutamol Inhalers are effective for asthma management. They provide quick relief and are easy to use.
+Povidone-iodine,Antiseptics,Wound Care,20-07-2023,27,Gangtok,100,Medium,Effective,Povidone-iodine is a reliable antiseptic for wound care. It? a staple for first aid.
+Aspirin,Cardiovascular Medicines,Heart Disease,30-04-2024,28,Darjeeling,235,Low,Not-Effective,Aspirin is good for heart health but can cause digestive issues. It's not always easy to tolerate.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,08-10-2023,29,Shimla,340,High,Effective,Cetirizine has provided excellent relief for my allergy symptoms. I am very satisfied with its performance.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,03-05-2024,32,Srinagar,280,High,Neutral,Paracetamol works well for minor headaches but doesn't always help with severe pain. It? decent overall.
+Loperamide,Gastrointestinal Medications,Diarrhea,15-03-2023,33,Jammu,170,High,Effective,Loperamide helped alleviate my diarrhea symptoms quickly. It? a good medication for such issues.
+Amoxicillin,Antibiotics,Infection,03-05-2024,36,Haridwar,290,High,Effective,Amoxicillin worked well for my bacterial infection. It had minimal side effects and was effective.
+Insulin,Chronic Disease Medications,Diabetes,03-04-2024,37,Gangtok,120,Low,Effective,"Insulin is crucial for my diabetes management. Although it is pricey, it keeps my blood sugar in check."
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,04-03-2024,38,Darjeeling,285,High,Not-Effective,Paracetamol is effective for mild pain but not strong enough for more severe headaches. I sometimes need more.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,20-04-2024,39,Shimla,185,Medium,Neutral,Salbutamol Inhalers are effective but can be bulky to carry around. They are essential for asthma control.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-03-2024,36,Srinagar,380,High,Neutral,Cetirizine provides moderate relief for my allergies but does not always last throughout the day.
+Insulin,Chronic Disease Medications,Diabetes,15-02-2024,37,Jammu,110,Low,Not-Effective,Insulin is necessary but challenging to manage due to its cost and the need for frequent adjustments.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,01-12-2023,38,Leh,170,Medium,Effective,Salbutamol Inhalers are effective and provide quick relief for asthma symptoms. They are essential for my asthma management.
+Povidone-iodine,Antiseptics,Wound Care,15-03-2024,39,Rishikesh,245,High,Neutral,Povidone-iodine is a common antiseptic. It is effective but doesn? stand out from other similar products.
+Loperamide,Gastrointestinal Medications,Diarrhea,02-11-2023,40,Haridwar,180,High,Effective,Loperamide provided effective relief for my diarrhea. It worked quickly and was easy to use.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,25-03-2023,41,Gangtok,210,High,Neutral,Paracetamol is useful for minor headaches but doesn? always provide complete relief for severe pain.
+Amoxicillin,Antibiotics,Infection,01-10-2024,43,Shimla,275,High,Neutral,Amoxicillin worked for my infection but had some side effects. It is generally effective for bacterial issues.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,11-05-2023,44,Dehradun,140,Medium,Neutral,Salbutamol Inhalers are necessary but have become a bit cumbersome to use. They do provide the needed relief.
+Insulin,Chronic Disease Medications,Diabetes,05-01-2024,45,Guwahati,105,Low,Effective,"Insulin is essential for managing my diabetes. Though expensive, it helps keep my blood sugar levels stable."
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-07-2023,46,Srinagar,320,High,Effective,Cetirizine is effective for controlling my allergies. I am satisfied with its performance and reliability.
+Povidone-iodine,Antiseptics,Wound Care,25-10-2023,47,Jammu,150,High,Neutral,Povidone-iodine works as expected for wound care but isn? particularly impressive compared to alternatives.
+Loperamide,Gastrointestinal Medications,Diarrhea,01-10-2023,48,Leh,150,Medium,Neutral,Loperamide works for mild diarrhea but doesn't address more severe gastrointestinal issues effectively.
+Aspirin,Cardiovascular Medicines,Heart Disease,02-03-2024,49,Rishikesh,220,Low,Effective,Aspirin is effective for cardiovascular health. It has been beneficial in managing my condition with regular use.
+Amoxicillin,Antibiotics,Infection,20-12-2023,50,Haridwar,250,High,Effective,Amoxicillin worked quickly to clear my infection. It had minimal side effects and was easy to take.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,02-02-2024,51,Gangtok,375,High,Neutral,Cetirizine helps with allergies but doesn? always last the entire day. It? a decent option for relief.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,10-10-2023,12,Darjeeling,115,Medium,Not-Effective,Salbutamol Inhalers were not as effective during a recent asthma attack. I had to use them more frequently.
+Insulin,Chronic Disease Medications,Diabetes,25-12-2023,13,Shimla,100,Low,Neutral,Insulin is a necessary medication for diabetes management but can be quite costly and requires careful monitoring.
+Povidone-iodine,Antiseptics,Wound Care,15-09-2023,14,Dehradun,170,Medium,Effective,Povidone-iodine is reliable for wound care. It has been a consistent choice for first aid and antiseptic needs.
+Loperamide,Gastrointestinal Medications,Diarrhea,20-07-2023,15,Guwahati,230,High,Effective,Loperamide is effective for treating diarrhea. It works well and provides quick relief.
+Amoxicillin,Antibiotics,Infection,11-01-2023,42,Srinagar,240,High,Neutral,Amoxicillin is effective but caused some side effects. It worked for my infection but was not perfect.
+Aspirin,Cardiovascular Medicines,Heart Disease,30-01-2024,43,Jammu,210,Low,Not-Effective,Aspirin is helpful for heart disease but can cause gastrointestinal discomfort. It? effective but needs to be monitored.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,10-01-2023,44,Leh,320,High,Effective,Cetirizine provides excellent relief for allergy symptoms. It? a reliable medication that works well.
+Insulin,Chronic Disease Medications,Diabetes,11-05-2023,45,Rishikesh,85,Low,Neutral,Insulin is essential but expensive. It helps manage diabetes effectively but requires regular adjustments.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,15-09-2023,46,Haridwar,120,Medium,Neutral,Salbutamol Inhalers are useful but can be inconvenient to carry. They provide necessary relief for asthma.
+Povidone-iodine,Antiseptics,Wound Care,20-08-2023,47,Gangtok,150,High,Effective,Povidone-iodine is a good antiseptic for treating wounds. It is effective and a standard choice for first aid.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,20-01-2024,48,Darjeeling,260,High,Not-Effective,Paracetamol sometimes isn? strong enough for severe headaches. It? suitable for minor pain but less effective for intense cases.
+Aspirin,Cardiovascular Medicines,Heart Disease,12-05-2023,49,Shimla,190,Low,Neutral,Aspirin is beneficial for cardiovascular health but can cause some digestive issues. It? effective but has side effects.
+Amoxicillin,Antibiotics,Infection,10-10-2023,50,Dehradun,240,High,Effective,Amoxicillin effectively treated my infection. It was easy to use with minimal side effects.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,25-09-2023,51,Guwahati,330,High,Not-Effective,Cetirizine provides relief for allergies but can sometimes cause drowsiness. It? effective but has some side effects.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,15-03-2023,52,Srinagar,220,High,Effective,Paracetamol is good for mild headaches. It works well and is a common choice for pain relief.
+Insulin,Chronic Disease Medications,Diabetes,10-01-2023,53,Jammu,80,Low,Not-Effective,Insulin is essential but expensive. Managing diabetes with it can be challenging due to its cost.
+Povidone-iodine,Antiseptics,Wound Care,11-05-2023,14,Leh,185,Medium,Effective,Povidone-iodine is a reliable antiseptic for minor wounds. It? effective and easy to use.
+Insulin,Chronic Disease Medications,Diabetes,09-02-2023,15,Shimla,95,Low,Neutral,Insulin is a necessary medication for diabetes management but can be quite costly and requires careful monitoring.
+Povidone-iodine,Antiseptics,Wound Care,01-06-2023,16,Dehradun,95,Medium,Effective,Povidone-iodine is reliable for wound care. It has been a consistent choice for first aid and antiseptic needs.
+Loperamide,Gastrointestinal Medications,Diarrhea,08-02-2023,17,Guwahati,220,High,Effective,Loperamide is effective for treating diarrhea. It works well and provides quick relief.
+Amoxicillin,Antibiotics,Infection,09-03-2023,18,Srinagar,225,High,Neutral,Amoxicillin is effective but caused some side effects. It worked for my infection but was not perfect.
+Aspirin,Cardiovascular Medicines,Heart Disease,11-04-2023,19,Jammu,195,Low,Not-Effective,Aspirin is helpful for heart disease but can cause gastrointestinal discomfort. It? effective but needs to be monitored.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,11-05-2023,20,Leh,350,High,Effective,Cetirizine provides excellent relief for allergy symptoms. It? a reliable medication that works well.
+Insulin,Chronic Disease Medications,Diabetes,08-06-2023,21,Rishikesh,80,Low,Neutral,Insulin is essential but expensive. It helps manage diabetes effectively but requires regular adjustments.
+Salbutamol Inhalers,Anti-asthmatics and Respiratory Drugs,Asthma,08-07-2023,22,Haridwar,110,Medium,Neutral,Salbutamol Inhalers are useful but can be inconvenient to carry. They provide necessary relief for asthma.
+Povidone-iodine,Antiseptics,Wound Care,12-08-2023,23,Gangtok,195,High,Effective,Povidone-iodine is a good antiseptic for treating wounds. It is effective and a standard choice for first aid.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,11-09-2023,24,Darjeeling,215,High,Not-Effective,Paracetamol sometimes isn? strong enough for severe headaches. It? suitable for minor pain but less effective for intense cases.
+Aspirin,Cardiovascular Medicines,Heart Disease,10-10-2023,25,Shimla,180,Low,Neutral,Aspirin is beneficial for cardiovascular health but can cause some digestive issues. It? effective but has side effects.
+Amoxicillin,Antibiotics,Infection,08-11-2023,26,Dehradun,215,High,Effective,Amoxicillin effectively treated my infection. It was easy to use with minimal side effects.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,06-12-2023,27,Guwahati,270,High,Not-Effective,Cetirizine provides relief for allergies but can sometimes cause drowsiness. It? effective but has some side effects.
+Paracetamol,Pain Relievers and Anti-inflammatory Drugs,Headache,13-12-2023,28,Srinagar,240,High,Effective,Paracetamol is good for mild headaches. It works well and is a common choice for pain relief.
+Insulin,Chronic Disease Medications,Diabetes,13-07-2023,29,Jammu,70,Low,Not-Effective,Insulin is essential but expensive. Managing diabetes with it can be challenging due to its cost.
+Povidone-iodine,Antiseptics,Wound Care,05-11-2023,30,Leh,110,Medium,Effective,Povidone-iodine is a reliable antiseptic for minor wounds. It? effective and easy to use.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-06-2023,31,Rishikesh,300,High,Not-Effective,Cetirizine worked initially but didn't provide long-term relief. Side effects were noticeable.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-03-2023,32,Rishikesh,235,High,Neutral,Cetirizine offers temporary relief from allergy symptoms but doesn't last as long as I would like.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-12-2023,33,Rishikesh,380,High,Effective,Cetirizine is very effective in treating allergy symptoms. The relief is almost immediate and long-lasting.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-02-2023,34,Rishikesh,210,High,Neutral,Cetirizine offers temporary relief from allergy symptoms but doesn't last as long as I would like.
+Cetirizine,Anti-allergics and Antihistamines,Allergy,20-04-2023,35,Rishikesh,230,High,Not-Effective,Cetirizine worked initially but didn't provide long-term relief. Side effects were noticeable.

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Akaya+Telivigala&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            background: #FFFFFF; /* White background */
+        }
+        .profile {
+            width: 90%; /* Increased width */
+            max-width: 900px; /* Added max-width for responsiveness */
+            margin: 50px auto;
+            background-color: #FFFFFF; /* White profile pane */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .profile-picture {
+            width: 120px; /* Adjusted width */
+            height: 120px; /* Adjusted height */
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 auto;
+            border: 2px solid #4f2566; /* Matching the theme color */
+        }
+        .profile-name {
+            font-size: 24px; /* Increased font size */
+            font-weight: bold;
+            margin: 15px 0;
+            color: #4f2566; /* Matching the theme color */
+            font-family: 'Montserrat', sans-serif;
+        }
+        .profile-email {
+            font-size: 18px; /* Increased font size */
+            color: #555;
+            margin-bottom: 20px;
+            font-family: 'Lato', sans-serif;
+        }
+        .recent-reviews {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .recent-reviews h3 {
+            font-size: 20px; /* Increased font size */
+            margin-bottom: 10px;
+            color: #4f2566;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .review-item {
+            background-color: #f9f9f9;
+            padding: 15px; /* Increased padding */
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4f2566; /* Adding a border to match the theme */
+        }
+        .review-item h4 {
+            margin: 0;
+            font-size: 18px; /* Font size for drug name */
+            color: #333;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .review-item p {
+            margin: 5px 0;
+            font-size: 16px; /* Increased font size */
+            color: #555;
+        }
+        .chart-container {
+            margin-top: 20px;
+        }
+        .chart-container h3 {
+            font-size: 20px; /* Increased font size */
+            color: #4f2566;
+            font-family: 'Montserrat', sans-serif;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            background-color: #4f2566;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 1em;
+            border-radius: 0 0 10px 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="profile">
+        <div class="profile-picture">
+            <!-- Embed Tenor GIF here -->
+            <div class="tenor-gif-embed" data-postid="17468287" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+                <a href="https://tenor.com/view/bust-in-silhouette-people-joypixels-generic-profile-user-gif-17468287">
+                    Bust In Silhouette People Sticker
+                </a> from
+                <a href="https://tenor.com/search/bust+in+silhouette-stickers">Bust In Silhouette Stickers</a>
+            </div>
+            <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        </div>
+        <div class="profile-name">John Doe</div>
+        <div class="profile-email">johndoe@example.com</div>
+
+        <div class="recent-reviews">
+            <h3>Recently Posted Reviews</h3>
+            <div class="review-item">
+                <h4>Drug: Aspirin</h4>
+                <p>Condition: Headache</p>
+                <p>Review: Effective for quick relief.</p>
+                <p>Rating: 4.5</p>
+            </div>
+            <div class="review-item">
+                <h4>Drug: Ibuprofen</h4>
+                <p>Condition: Back Pain</p>
+                <p>Review: Provides good relief but can be harsh on the stomach.</p>
+                <p>Rating: 4.0</p>
+            </div>
+            <div class="review-item">
+                <h4>Drug: Amoxicillin</h4>
+                <p>Condition: Infection</p>
+                <p>Review: Effective antibiotic with minimal side effects.</p>
+                <p>Rating: 4.8</p>
+            </div>
+        </div>
+
+        <div class="chart-container">
+            <h3>Posted Reviews Over Time</h3>
+            <canvas id="searchChart"></canvas>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 Drug Review Analysis. All rights reserved.
+    </footer>
+
+    <script>
+        // Sample data for chart
+        const labels = ['January', 'February', 'March', 'April', 'May', 'June'];
+        const data = {
+            labels: labels,
+            datasets: [{
+                label: 'Number of Posted Reviews',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                data: [3, 1, 4, 0,2, 6], // Example data points
+                fill: true
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        };
+
+        const searchChart = new Chart(
+            document.getElementById('searchChart'),
+            config
+        );
+    </script>
+</body>
+</html>

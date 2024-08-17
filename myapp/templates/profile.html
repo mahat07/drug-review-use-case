@@ -1,0 +1,218 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #000000;
+            background: #FFFFFF; /* White background */
+        }
+        .profile {
+            width: 90%; /* Increased width */
+            max-width: 900px; /* Added max-width for responsiveness */
+            margin: 50px auto;
+            background-color: #FFFFFF; /* White profile pane */
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .profile-picture {
+            width: 120px; /* Adjusted width */
+            height: 120px; /* Adjusted height */
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 auto;
+            border: 2px solid #4f2566; /* Matching the theme color */
+        }
+        .profile-name {
+            font-size: 24px; /* Increased font size */
+            font-weight: bold;
+            margin: 15px 0;
+            color: #4f2566; /* Matching the theme color */
+            font-family: 'Montserrat', sans-serif;
+        }
+        .profile-email {
+            font-size: 18px; /* Increased font size */
+            color: #555;
+            margin-bottom: 20px;
+            font-family: 'Lato', sans-serif;
+        }
+        .recent-reviews {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .recent-reviews h3 {
+            font-size: 20px; /* Increased font size */
+            margin-bottom: 10px;
+            color: #4f2566;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .review-item {
+            background-color: #f9f9f9;
+            padding: 15px; /* Increased padding */
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 4px solid #4f2566; /* Adding a border to match the theme */
+        }
+        .review-item h4 {
+            margin: 0;
+            font-size: 18px; /* Font size for drug name */
+            color: #333;
+            font-family: 'Montserrat', sans-serif;
+        }
+        .review-item p {
+            margin: 5px 0;
+            font-size: 16px; /* Increased font size */
+            color: #555;
+        }
+        .chart-container {
+            width: 100%;
+            margin-top: 30px;
+        }
+        canvas {
+            max-width: 100%;
+            height: auto;
+        }
+        footer {
+            background-color: #4f2566;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            font-size: 1em;
+            border-radius: 0 0 10px 10px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="profile">
+        <div class="profile-picture">
+            <!-- Embed Tenor GIF here -->
+            <div class="tenor-gif-embed" data-postid="17468287" data-share-method="host" data-aspect-ratio="1" data-width="100%">
+                <a href="https://tenor.com/view/bust-in-silhouette-people-joypixels-generic-profile-user-gif-17468287">
+                    Bust In Silhouette People Sticker
+                </a> from
+                <a href="https://tenor.com/search/bust+in+silhouette-stickers">Bust In Silhouette Stickers</a>
+            </div>
+            <script type="text/javascript" async src="https://tenor.com/embed.js"></script>
+        </div>
+        <div class="profile-name">{{ user.username }}</div>
+        <div class="profile-email">{{ user.email }}</div>
+
+        <div class="recent-reviews">
+            <h3>Recently Posted Reviews</h3>
+            {% if reviews %}
+                {% for review in reviews %}
+                    <div class="review-item">
+                        <h4>Drug: {{ review.drugname }}</h4>
+                        <p>Condition: {{ review.condition }}</p>
+                        <p>Review: {{ review.review }}</p>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No reviews found.</p>
+            {% endif %}
+        </div>
+        <div class="review-trends">
+            <h3>Reviews by Condition</h3>
+            <canvas id="conditionTrendChart"></canvas>
+        </div>
+    </div>
+
+    <footer>
+        © 2024 Drug Review Analysis. All rights reserved.
+    </footer>
+    <script>
+        // Sample data from review items (Replace with actual data extraction)
+        const reviewItems = document.querySelectorAll('.review-item');
+        
+        const conditions = [];
+        const conditionCounts = {};
+    
+        reviewItems.forEach(item => {
+            const condition = item.querySelector('p').textContent.replace('Condition: ', '');
+            if (conditionCounts[condition]) {
+                conditionCounts[condition]++;
+            } else {
+                conditionCounts[condition] = 1;
+            }
+        });
+    
+        // Prepare data for Chart.js
+        const conditionTrendData = {
+            labels: Object.keys(conditionCounts),
+            datasets: [{
+                label: 'Number of Reviews',
+                data: Object.values(conditionCounts),
+                backgroundColor: '#4f2566',
+                borderColor: '#4f2566',
+                borderWidth: 1
+            }]
+        };
+    
+        const ctx = document.getElementById('conditionTrendChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: conditionTrendData,
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return `Reviews: ${tooltipItem.raw}`;
+                            }
+                        }
+                    }
+                },
+                scales: {
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Condition'
+                        },
+                        ticks: {
+                            autoSkip: false
+                        },
+                        // Adjust the width of bars
+                        grid: {
+                            display: false
+                        }
+                    },
+                    y: {
+                        title: {
+                            display: true,
+                            text: 'Number of Reviews'
+                        },
+                        beginAtZero: true,
+                        // Adjust the height of bars
+                        grid: {
+                            display: true
+                        }
+                    }
+                },
+                // Adjust the thickness and spacing of the bars
+                elements: {
+                    bar: {
+                        borderRadius: 5,
+                        barThickness: 12,  // Width of the bars
+                    }
+                }
+            }
+        });
+    </script>    
+</body>
+</html>
+
